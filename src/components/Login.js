@@ -10,8 +10,8 @@ class Login extends Component {
             email: '',
             password: '',
             formErrors: {email: '', password: ''},
-            emailValid: false,
-            passwordValid: false,
+            emailValid: true,
+            passwordValid: true,
             formValid: false,
             globalError:''
         };
