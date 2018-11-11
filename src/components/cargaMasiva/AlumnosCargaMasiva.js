@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormGroup, CustomInput, Input, FormFeedback, Card, CardBody, CardHeader, CardFooter, Row, Col,
+import { Button, FormGroup, Input, FormFeedback, Card, CardBody, CardHeader, CardFooter, Row, Col,
     Container, Alert, Label } from 'reactstrap';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -125,10 +125,10 @@ class AlumnosCargaMasiva extends React.Component {
             let errors = data.errorMessages;
             let totalSuccess = data.successCount;
             this.setState({
-                    warningMessages: warnings,
-                    errorMessages: errors,
-                    processedSuccess: totalSuccess
-                });
+                warningMessages: warnings,
+                errorMessages: errors,
+                processedSuccess: totalSuccess
+            });
 
         }).catch(err =>{
         });

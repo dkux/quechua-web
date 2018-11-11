@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Header from "../layout/Header";
 import {Alert} from 'reactstrap';
 import Footer from "../layout/Footer";
@@ -12,10 +13,10 @@ class MainPage extends React.Component {
         this.state = {
             userName: ""
         };
+
     }
     componentWillMount() {
-        let profile = Auth.getProfile();
-        let userName = profile.firstName + " " + profile.lastName;
+        let userName = this.props.user.firstName + " " + this.props.user.lastName;
         this.setState({
             userName: userName
         })
@@ -34,7 +35,6 @@ class MainPage extends React.Component {
                 </div>
                 <Footer />
             </div>
-
         );
     }
 }

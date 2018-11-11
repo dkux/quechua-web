@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './main.css';
 
 import {
@@ -14,7 +15,6 @@ import {
     DropdownMenu,
     DropdownItem} from 'reactstrap';
 import AuthService from "../AuthService";
-import App from "../../App";
 const Auth = new AuthService();
 
 export default class MainPage extends React.Component {
@@ -53,11 +53,15 @@ export default class MainPage extends React.Component {
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                     <DropdownItem>
-                                        <a href="/crearCurso">Crear Curso</a>
+                                        <Link to="/crearCurso">Crear Curso</Link>
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>
-                                        <a href="/alumnos/cargaMasiva">Importar alumnos</a>
+                                        <Link to="/periodos">Periodos</Link>
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>
+                                        <Link to="/alumnos/cargaMasiva">Importar alumnos</Link>
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>
