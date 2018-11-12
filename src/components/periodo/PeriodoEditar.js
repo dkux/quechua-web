@@ -123,6 +123,7 @@ class PeriodoEditar extends React.Component {
                                                                 <option value="CONSULTAR_PRIORIDAD">Consultar prioridades</option>
                                                                 <option value="INSCRIPCION_COLOQUIO">Inscripción a coloquios</option>
                                                                 <option value="INSCRIPCION_CURSADA">Inscripcion a Cursadas</option>
+                                                                <option value="CREACION_COLOQUIO">Creación de coloquios</option>
                                                             </Input>
                                                         </FormGroup>
                                                     </Col>

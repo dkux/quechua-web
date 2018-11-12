@@ -16,6 +16,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import MainPage from './components/mainPage/MainPage';
 import AlumnoCargaMasiva from './components/cargaMasiva/AlumnosCargaMasiva';
+import ProfesorCargaMasiva from './components/cargaMasiva/ProfesoresCargaMasiva';
 import PeriodoIndex from './components/periodo/PeriodoIndex';
 import PeriodoEditar from './components/periodo/PeriodoEditar';
 import PeriodoCrear from './components/periodo/PeriodoCrear';
@@ -31,6 +32,7 @@ ReactDOM.render((
                 <Route exact path="/" component={MainPage} />
                 <Route exact path="/crearCurso" component={CursoCrear} />
                 <Route exact path="/alumnos/cargaMasiva" component={AlumnoCargaMasiva} />
+                <Route exact path="/profesores/cargaMasiva" component={ProfesorCargaMasiva} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/periodos" component={PeriodoIndex} />
                 <Route exact path="/periodos/edit/:id" component={PeriodoEditar} />

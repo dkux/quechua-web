@@ -109,6 +109,8 @@ function actividadFormatter(cell) {
         return 'Consultar prioridades';
     } else if (cell === 'INSCRIPCION_COLOQUIO') {
         return 'Inscripción a coloquios';
+    } else if (cell === 'CREACION_COLOQUIO') {
+        return "Creación de coloquios";
     }
     return cell;
 }

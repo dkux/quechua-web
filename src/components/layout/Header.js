@@ -61,11 +61,11 @@ export default class MainPage extends React.Component {
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>
-                                        <Link to="/alumnos/cargaMasiva">Importar alumnos</Link>
+                                        <Link to="/alumnos/cargaMasiva">Importar Alumnos</Link>
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>
-                                        Importar Profesores
+                                        <Link to="/profesores/cargaMasiva">Importar Profesores</Link>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
