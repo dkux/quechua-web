@@ -179,7 +179,7 @@ class CursoEditar extends React.Component {
                                                                 onChange={(event) => this.handleUserInput(event)}
                                                             >
                                                                 {this.state.profesores.map(profesor =>
-                                                                    <option key={profesor.id} value={profesor.id}>{profesor.nombre+", "+profesor.apellido}</option>
+                                                                    <option key={profesor.id} value={profesor.id}>{profesor.apellido+", "+profesor.nombre}</option>
                                                                 )};
                                                             </Input>
                                                         </FormGroup>
@@ -223,8 +223,8 @@ class CursoEditar extends React.Component {
                                                                     type="select"
                                                                     onChange={(event) => this.handleUserInputHorario(event)}
                                                                 >
-                                                                    <option value="PC">Paseo Colon</option>
                                                                     <option value="LH">Las Heras</option>
+                                                                    <option value="PC">Paseo Colon</option>
                                                                 </Input>
                                                             </FormGroup>
                                                         </Col>
@@ -256,7 +256,6 @@ class CursoEditar extends React.Component {
                                                                     validate={{
                                                                         required: { value: true, errorMessage: 'Campo obligatorio.' },
                                                                         pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.' },
-                                                                        async: this.validate
                                                                     }}
                                                                 />
                                                             </FormGroup>
@@ -273,7 +272,6 @@ class CursoEditar extends React.Component {
                                                                     validate={{
                                                                         required: { value: true, errorMessage: 'Campo obligatorio.' },
                                                                         pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.' },
-                                                                        async: this.validate
                                                                     }}
                                                                 />
                                                             </FormGroup>

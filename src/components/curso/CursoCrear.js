@@ -194,7 +194,7 @@ class CursoEditar extends React.Component {
                                                             >
                                                                 <option value="">Seleccione un Profesor</option>
                                                                 {this.state.profesores.map(profesor =>
-                                                                    <option key={profesor.id} value={profesor.id}>{profesor.nombre+", "+profesor.apellido}</option>
+                                                                    <option key={profesor.id} value={profesor.id}>{profesor.apellido+", "+profesor.nombre}</option>
                                                                 )};
                                                             </AvField>
                                                         </FormGroup>
@@ -238,8 +238,8 @@ class CursoEditar extends React.Component {
                                                                     type="select"
                                                                     onChange={(event) => this.handleUserInputHorario(event)}
                                                                 >
-                                                                    <option value="PC">Paseo Colon</option>
                                                                     <option value="LH">Las Heras</option>
+                                                                    <option value="PC">Paseo Colon</option>
                                                                 </Input>
                                                             </FormGroup>
                                                         </Col>
