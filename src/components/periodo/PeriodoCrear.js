@@ -66,6 +66,33 @@ class PeriodoCrear extends React.Component {
                                 </Col>
                             </Row>
                             <Row>
+                                <Col sm={12}>
+                                    <Alert color="secondary">
+                                        <h5>Consultar prioridades</h5>
+                                        <ul>
+                                            <li>Permite a los alumnos consultar su prioridad</li>
+                                        </ul>
+                                        <h5>Inscripción a coloquios</h5>
+                                        <ul>
+                                            <li>Permite generar inscripciones a finales</li>
+                                        </ul>
+                                        <h5>Inscripcion a Cursadas</h5>
+                                        <ul>
+                                            <li>Representa el período de inscripción a cursadas</li>
+                                        </ul>
+                                        <h5>Creación de coloquios</h5>
+                                        <ul>
+                                            <li>Permite generar fechas de finales sobre el rango de fechas que representa</li>
+                                            <li>Representa el periodo donde los estudiantes pueden rendir coloquios</li>
+                                        </ul>
+                                        <h5>Desinscripcion cursada</h5>
+                                        <ul>
+                                            <li>Representa el período de desinscripción a cursadas, antes de comenzar el cuatrimestre</li>
+                                        </ul>
+                                    </Alert>
+                                </Col>
+                            </Row>
+                            <Row>
                                 <Col sm="12">
                                     <Card>
                                         <CardHeader>Crear Periodo administrativo</CardHeader>
