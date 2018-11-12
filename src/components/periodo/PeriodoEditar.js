@@ -124,6 +124,7 @@ class PeriodoEditar extends React.Component {
                                                                 <option value="INSCRIPCION_COLOQUIO">Inscripción a coloquios</option>
                                                                 <option value="INSCRIPCION_CURSADA">Inscripcion a Cursadas</option>
                                                                 <option value="CREACION_COLOQUIO">Creación de coloquios</option>
+                                                                <option value="DESINSCRIPCION_CURSADA">Desinscripcion cursada</option>
                                                             </Input>
                                                         </FormGroup>
                                                     </Col>

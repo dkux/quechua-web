@@ -29,10 +29,6 @@ const columns = [
         text: 'Actividad',
         sort: true,
         formatter: actividadFormatter
-    }, {
-        dataField: 'id',
-        text: 'Accion',
-        formatter: accionFormatter
     }
 ];
 
@@ -111,6 +107,8 @@ function actividadFormatter(cell) {
         return 'Inscripción a coloquios';
     } else if (cell === 'CREACION_COLOQUIO') {
         return "Creación de coloquios";
+    } else if (cell === 'DESINSCRIPCION_CURSADA') {
+        return 'Desinscripcion cursada';
     }
     return cell;
 }
