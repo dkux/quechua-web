@@ -53,7 +53,7 @@ export default class MainPage extends React.Component {
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                     <DropdownItem>
-                                        <Link to="/crearCurso">Crear Curso</Link>
+                                        <Link to="/cursos">Cursos</Link>
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, FormGroup, Input, Card, CardBody, CardHeader, CardFooter, Row, Col,
     Container, Alert, Label } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-
+import { toast } from 'react-toastify';
 import {Link, Redirect} from "react-router-dom";
 
 import Header from "../layout/Header";
@@ -12,7 +12,6 @@ import AuthService from "../AuthService";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {toast} from "react-toastify";
 
 const Greet = ({ name }) => <div>{name}</div>
 
@@ -21,6 +20,7 @@ class CursoEditar extends React.Component {
     constructor(props){
         super(props);
         this.state  = {
+            id: null,
             estado: '',
             vacantes: '',
             numero: '',
@@ -28,20 +28,21 @@ class CursoEditar extends React.Component {
             profesor: '',
             periodo: '',
             removedHorarios: [],
-            horarios: [],
+            horarios: [{dia: '', sede: '', aula: '', horaInicio: '', horaFin: ''}],
             periodos: [],
             materias:[],
             profesores:[],
-            formValid: false,
+            formValid: true,
             error: false,
             success: false,
-            redirect: false
+            redirect: false,
         };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.Auth = new AuthService();
     }
     componentDidMount () {
-        this.getData();
+        let cursoId = this.props.history.location.pathname.split("/").pop();
+        this.getCurso(cursoId);
     }
 
     render() {
@@ -78,21 +79,17 @@ class CursoEditar extends React.Component {
                                                     <Col md={6}>
                                                         <FormGroup>
                                                             <Label>Estado</Label>
-                                                            <AvField
+                                                            <Input
                                                                 className="form-control"
                                                                 value={this.state.estado}
                                                                 name="estado"
                                                                 type="select"
                                                                 onChange={(event) => this.handleUserInput(event)}
-                                                                validate={{
-                                                                    required: { value: true, errorMessage: 'Este campo es obligatorio.' },
-                                                                }}
                                                             >
-                                                                <option value="">Seleccione un Estado</option>
                                                                 <option value="ACTIVO">Activo</option>
                                                                 <option value="INACTIVO">Inactivo</option>
                                                                 <option value="ELIMINADO">Eliminado</option>
-                                                            </AvField>
+                                                            </Input>
 
                                                         </FormGroup>
                                                     </Col>
@@ -138,7 +135,7 @@ class CursoEditar extends React.Component {
                                                     <Col md={6}>
                                                         <FormGroup>
                                                             <Label>Período</Label>
-                                                            <AvField
+                                                            <Input
                                                                 className="form-control"
                                                                 placeholder="Vacantes"
                                                                 value={this.state.periodo}
@@ -146,15 +143,11 @@ class CursoEditar extends React.Component {
                                                                 type="select"
                                                                 min="1"
                                                                 onChange={(event) => this.handleUserInput(event)}
-                                                                validate={{
-                                                                    required: { value: true, errorMessage: 'Este campo es obligatorio.' },
-                                                                }}
                                                             >
-                                                                <option value="">Seleccione un Periodo</option>
                                                                 {this.state.periodos.map(periodo =>
                                                                     <option key={periodo.id} value={periodo.id}>{periodo.cuatrimestre+"-"+periodo.anio}</option>
                                                                 )};
-                                                            </AvField>
+                                                            </Input>
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
@@ -162,41 +155,33 @@ class CursoEditar extends React.Component {
                                                     <Col md={6}>
                                                         <FormGroup>
                                                             <Label>Materia</Label>
-                                                            <AvField
+                                                            <Input
                                                                 className="form-control"
                                                                 value={this.state.materia}
                                                                 name="materia"
                                                                 type="select"
                                                                 onChange={(event) => this.handleUserInput(event)}
-                                                                validate={{
-                                                                    required: { value: true, errorMessage: 'Este campo es obligatorio.' },
-                                                                }}
                                                             >
-                                                                <option value="">Seleccione una Materia</option>
                                                                 {this.state.materias.map(materia =>
                                                                     <option key={materia.id} value={materia.id}>{materia.nombre+"("+materia.codigo+")"}</option>
                                                                 )};
-                                                            </AvField>
+                                                            </Input>
                                                         </FormGroup>
                                                     </Col>
                                                     <Col md={6}>
                                                         <FormGroup>
                                                             <Label>Profesor</Label>
-                                                            <AvField
+                                                            <Input
                                                                 className="form-control"
                                                                 value={this.state.profesor}
                                                                 name="profesor"
                                                                 type="select"
                                                                 onChange={(event) => this.handleUserInput(event)}
-                                                                validate={{
-                                                                    required: { value: true, errorMessage: 'Este campo es obligatorio.' },
-                                                                }}
                                                             >
-                                                                <option value="">Seleccione un Profesor</option>
                                                                 {this.state.profesores.map(profesor =>
                                                                     <option key={profesor.id} value={profesor.id}>{profesor.nombre+", "+profesor.apellido}</option>
                                                                 )};
-                                                            </AvField>
+                                                            </Input>
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
@@ -271,6 +256,7 @@ class CursoEditar extends React.Component {
                                                                     validate={{
                                                                         required: { value: true, errorMessage: 'Campo obligatorio.' },
                                                                         pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.' },
+                                                                        async: this.validate
                                                                     }}
                                                                 />
                                                             </FormGroup>
@@ -287,6 +273,7 @@ class CursoEditar extends React.Component {
                                                                     validate={{
                                                                         required: { value: true, errorMessage: 'Campo obligatorio.' },
                                                                         pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.' },
+                                                                        async: this.validate
                                                                     }}
                                                                 />
                                                             </FormGroup>
@@ -325,6 +312,7 @@ class CursoEditar extends React.Component {
         let materia = this.state.materias.filter(materia => materia.id === parseInt(this.state.materia))[0];
 
         let data = {
+            id: this.state.id,
             estado: this.state.estado,
             vacantes: this.state.vacantes,
             numero: this.state.numero,
@@ -339,7 +327,7 @@ class CursoEditar extends React.Component {
         return fetch(`http://localhost:8080/api/cursosAndHorarios`,
             {
                 headers: headers,
-                method: 'POST',
+                method: 'PUT',
                 body: JSON.stringify(data)
             }
         ).then((resp) => resp.json()
@@ -388,13 +376,9 @@ class CursoEditar extends React.Component {
         let aulaValid = false;
         let horaInicioValid = false;
         let horaFinValid = false;
-        let vacantesValid = this.state.vacantes.length > 0 && !(parseInt(this.state.vacantes) < 10);
-        let numeroValid = this.state.numero.length > 0 && !(parseInt(this.state.numero) < 1);
-        let estadoValid = this.state.estado.length;
-        let materiaValid = this.state.materia.length;
-        let periodoValid = this.state.periodo.length;
-        let profesorValid = this.state.profesor.length;
-        valido = vacantesValid && numeroValid && estadoValid && materiaValid && periodoValid && profesorValid && horarios.length > 0;
+        let vacantesValid = (parseInt(this.state.vacantes) > 9);
+        let numeroValid = (parseInt(this.state.numero) > 0);
+        valido = vacantesValid && numeroValid && horarios.length > 0;
         if (valido) {
             const horaRegex = '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$';
             for(let i = 0; i < horarios.length; i++) {
@@ -456,28 +440,56 @@ class CursoEditar extends React.Component {
         },() => { this.handleValidate() })
     }
 
+    validate(value, ctx, input, cb) {
+        /*console.log(value);
+        console.log(ctx);
+        console.log(input);
+        console.log(cb);*/
 
-    getData() {
-        let profesores, materias, periodos;
-        this.Auth.fetch(`http://localhost:8080/api/profesors`, {
-            method: 'GET'
+    }
+
+    getCurso(cursoId) {
+        let id, estado, vacantes, numero, profesor, periodo, materia, horarios, profesores, materias, periodos;
+        this.Auth.fetch(`http://localhost:8080/api/cursos/${cursoId}`, {
+            method: 'GET',
         }).then(res => {
-            profesores = res;
-            this.Auth.fetch(`http://localhost:8080/api/materias`, {
+            id = res.id;
+            estado = res.estado;
+            vacantes = res.vacantes;
+            numero = res.numero;
+            profesor = res.profesor.id;
+            periodo = res.periodo.id;
+            materia = res.materia.id;
+            horarios = res.horarios;
+            this.Auth.fetch(`http://localhost:8080/api/profesors`, {
                 method: 'GET'
             }).then(res => {
-                materias = res;
-                this.Auth.fetch(`http://localhost:8080/api/periodos`, {
+                profesores = res;
+                this.Auth.fetch(`http://localhost:8080/api/materias`, {
                     method: 'GET'
                 }).then(res => {
-                    periodos = res;
-                    this.setState({
-                        profesores: profesores,
-                        materias: materias,
-                        periodos: periodos,
-                    })
+                    materias = res;
+                    this.Auth.fetch(`http://localhost:8080/api/periodos`, {
+                        method: 'GET'
+                    }).then(res => {
+                        periodos = res;
+                        this.setState({
+                            id: id,
+                            estado: estado,
+                            vacantes: vacantes,
+                            numero: numero,
+                            profesor: profesor,
+                            periodo: periodo,
+                            materia: materia,
+                            horarios: horarios,
+                            profesores: profesores,
+                            materias: materias,
+                            periodos: periodos,
+                        })
+                    });
                 });
             });
+
         });
     }
 }

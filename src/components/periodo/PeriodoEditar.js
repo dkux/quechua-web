@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, FormGroup, Input, FormFeedback, Card, CardBody, CardHeader, CardFooter, Row, Col,
     Container, Alert, Label } from 'reactstrap';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import DatePicker from "react-datepicker";
 
 import Header from "../layout/Header";
@@ -12,6 +12,9 @@ import AuthService from "../AuthService";
 import * as moment from 'moment';
 import 'moment/locale/es';
 import "react-datepicker/dist/react-datepicker.css";
+import {toast} from "react-toastify";
+
+const Greet = ({ name }) => <div>{name}</div>
 
 class PeriodoEditar extends React.Component {
 
@@ -26,7 +29,8 @@ class PeriodoEditar extends React.Component {
             actividad: '',
             formValid: true,
             success: false,
-            error: false
+            error: false,
+            redirec: false,
         };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleChangeFechaInicio = this.handleChangeFechaInicio.bind(this);
@@ -41,6 +45,9 @@ class PeriodoEditar extends React.Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/periodos'/>;
+        }
         return (
             <div>
                 <Header history={this.props.history}/>
@@ -160,7 +167,9 @@ class PeriodoEditar extends React.Component {
         )
             .then((resp) => resp.json())
             .then(data => {
+                toast(<Greet name="Periodo guardado correctamente" />);
                 this.setState({
+                    redirect: true,
                     success: true,
                 });
             }).catch(err =>{

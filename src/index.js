@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -11,24 +15,32 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // Our Components
 import Login from './components/Login';
 import MainPage from './components/mainPage/MainPage';
-import CursoCrear from './components/curso/CursoCrear';
 import AlumnoCargaMasiva from './components/cargaMasiva/AlumnosCargaMasiva';
 import PeriodoIndex from './components/periodo/PeriodoIndex';
 import PeriodoEditar from './components/periodo/PeriodoEditar';
 import PeriodoCrear from './components/periodo/PeriodoCrear';
+import CursoIndex from './components/curso/CursoIndex';
+import CursoEditar from './components/curso/CursoEditar';
+import CursoCrear from './components/curso/CursoCrear';
 
 ReactDOM.render((
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/" component={MainPage} />
-            <Route exact path="/crearCurso" component={CursoCrear} />
-            <Route exact path="/periodos" component={PeriodoIndex} />
-            <Route exact path="/alumnos/cargaMasiva" component={AlumnoCargaMasiva} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/periodos/edit/:id" component={PeriodoEditar} />
-            <Route exact path="/periodos/crear" component={PeriodoCrear} />
-        </Switch>
-    </BrowserRouter>), document.getElementById('root')
+    <div>
+        <ToastContainer position={"top-left"} className="toastify-container" toastClassName="toastify-toast" />
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={MainPage} />
+                <Route exact path="/crearCurso" component={CursoCrear} />
+                <Route exact path="/alumnos/cargaMasiva" component={AlumnoCargaMasiva} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/periodos" component={PeriodoIndex} />
+                <Route exact path="/periodos/edit/:id" component={PeriodoEditar} />
+                <Route exact path="/periodos/crear" component={PeriodoCrear} />
+                <Route exact path="/cursos" component={CursoIndex} />
+                <Route exact path="/cursos/crear" component={CursoCrear} />
+                <Route exact path="/cursos/edit/:id" component={CursoEditar} />
+            </Switch>
+        </BrowserRouter>
+    </div>), document.getElementById('root')
 );
 registerServiceWorker();
 
