@@ -23,6 +23,7 @@ import PeriodoCrear from './components/periodo/PeriodoCrear';
 import CursoIndex from './components/curso/CursoIndex';
 import CursoEditar from './components/curso/CursoEditar';
 import CursoCrear from './components/curso/CursoCrear';
+import ReporteCursos from './components/reporte/ReporteCursos';
 
 ReactDOM.render((
     <div>
@@ -40,6 +41,7 @@ ReactDOM.render((
                 <Route exact path="/cursos" component={CursoIndex} />
                 <Route exact path="/cursos/crear" component={CursoCrear} />
                 <Route exact path="/cursos/edit/:id" component={CursoEditar} />
+                <Route exact path="/reportes" component={ReporteCursos} />
             </Switch>
         </BrowserRouter>
     </div>), document.getElementById('root')
