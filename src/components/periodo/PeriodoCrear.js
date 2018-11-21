@@ -40,6 +40,11 @@ class PeriodoCrear extends React.Component {
         this.Auth = new AuthService();
     }
 
+    componentDidMount () {
+        if (!this.props.user.authorities.includes('ROLE_ADMIN')) {
+            this.props.history.replace('/error/401');
+        }
+    }
 
     render() {
         if (this.state.redirect) {

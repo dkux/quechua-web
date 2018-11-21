@@ -15,17 +15,26 @@ import {
     DropdownMenu,
     DropdownItem} from 'reactstrap';
 import AuthService from "../AuthService";
+import withAuth from "../withAuth";
 const Auth = new AuthService();
 
-export default class MainPage extends React.Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
 
         this.toggle = this.toggle.bind(this);
         this.state = {
-            isOpen: false
+            isOpen: false,
+            userAuthorities: []
         };
     }
+
+    componentWillMount() {
+        this.setState({
+            userAuthorities: this.props.user.authorities
+        })
+    }
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
@@ -55,18 +64,20 @@ export default class MainPage extends React.Component {
                                     <DropdownItem>
                                         <Link to="/cursos">Cursos</Link>
                                     </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem>
-                                        <Link to="/periodos">Periodos</Link>
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem>
-                                        <Link to="/alumnos/cargaMasiva">Importar Alumnos</Link>
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem>
-                                        <Link to="/profesores/cargaMasiva">Importar Profesores</Link>
-                                    </DropdownItem>
+                                    <div className={this.state.userAuthorities.includes('ROLE_ADMIN') ? '' : 'd-none'}>
+                                        <DropdownItem divider />
+                                        <DropdownItem>
+                                            <Link to="/periodos">Periodos</Link>
+                                        </DropdownItem>
+                                        <DropdownItem divider />
+                                        <DropdownItem>
+                                            <Link to="/alumnos/cargaMasiva">Importar Alumnos</Link>
+                                        </DropdownItem>
+                                        <DropdownItem divider />
+                                        <DropdownItem>
+                                            <Link to="/profesores/cargaMasiva">Importar Profesores</Link>
+                                        </DropdownItem>
+                                    </div>
                                     <DropdownItem divider />
                                     <DropdownItem>
                                         <Link to="/reportes">Reporte</Link>
@@ -85,3 +96,6 @@ export default class MainPage extends React.Component {
         );
     }
 }
+
+export default withAuth(Header);
+

@@ -40,6 +40,9 @@ class PeriodoEditar extends React.Component {
         this.Auth = new AuthService();
     }
     componentDidMount () {
+        if (!this.props.user.authorities.includes('ROLE_ADMIN')) {
+            this.props.history.replace('/error/401');
+        }
         let periodoId = this.props.history.location.pathname.split("/").pop();
         this.getPeriodo(periodoId);
     }

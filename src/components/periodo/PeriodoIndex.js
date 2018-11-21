@@ -45,6 +45,9 @@ class PeriodoIndex extends React.Component {
     }
 
     componentWillMount(){
+        if (!this.props.user.authorities.includes('ROLE_ADMIN')) {
+            this.props.history.replace('/error/401');
+        }
         this.getPeriodos();
     }
 

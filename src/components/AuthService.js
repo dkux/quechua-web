@@ -98,7 +98,7 @@ export default class AuthService {
         return this.fetch(`${this.domain}/api/account`, {
             method: 'GET',
         }).then(res => {
-            if (res.authorities.indexOf('ROLE_ADMIN') < 0) {
+            if (!res.authorities.includes('ROLE_ADMIN') && !res.authorities.includes('ROLE_ADM_DPTO')) {
                 this.logout();
                 return Promise.reject("No es un usuario Admin");
             }

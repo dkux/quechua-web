@@ -24,9 +24,11 @@ import CursoIndex from './components/curso/CursoIndex';
 import CursoEditar from './components/curso/CursoEditar';
 import CursoCrear from './components/curso/CursoCrear';
 import ReporteCursos from './components/reporte/ReporteCursos';
+import Error401 from './components/error/401'
+import Error404 from './components/error/404'
 
 ReactDOM.render((
-    <div>
+    <div style={{height:'100%'}}>
         <ToastContainer position={"top-left"} className="toastify-container" toastClassName="toastify-toast" />
         <BrowserRouter>
             <Switch>
@@ -42,6 +44,9 @@ ReactDOM.render((
                 <Route exact path="/cursos/crear" component={CursoCrear} />
                 <Route exact path="/cursos/edit/:id" component={CursoEditar} />
                 <Route exact path="/reportes" component={ReporteCursos} />
+                <Route exact path="/error/401" component={Error401} />
+                <Route path="*" component={Error404} />
+
             </Switch>
         </BrowserRouter>
     </div>), document.getElementById('root')
