@@ -22,6 +22,7 @@ class PeriodoCrear extends React.Component {
         super(props);
         this.state  = {
             id: null,
+            descripcion: '',
             fechaInicio: moment(),
             fechaInicioValid: true,
             fechaFin: moment(),
@@ -104,6 +105,17 @@ class PeriodoCrear extends React.Component {
                                         <CardBody>
                                             <form onSubmit={this.handleFormSubmit}>
                                                 <Row>
+                                                    <Col>
+                                                        <FormGroup>
+                                                            <Label>Descripcion</Label>
+                                                            <Input
+                                                                className="form-control"
+                                                                value={this.state.descripcion}
+                                                                type="text"
+                                                                onChange={(event) => this.handleDescripcionInput(event)}
+                                                            />
+                                                        </FormGroup>
+                                                    </Col>
                                                     <Col>
                                                         <FormGroup>
                                                             <Label>Fecha de Inicio</Label>
@@ -208,6 +220,14 @@ class PeriodoCrear extends React.Component {
                     error: true,
                 });
             });
+    }
+
+    handleDescripcionInput(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState( {
+            descripcion: value
+        }, this.validateForm);
     }
 
     handleChangeFechaInicio(value) {
