@@ -19,18 +19,19 @@ const MateriasChart = (props) => {
         tooltip: {
             useHTML: true,
             headerFormat: '<b>{point.key}</b><table>',
-            pointFormat: `<tr>
-                            <td style="color: {series.color}">#Inscriptos: </td>
-                            <td style="text-align: right"><b>{point.inscriptos}</b></td>
-                      </tr>
-                      <tr>
-                            <td style="color: {series.color}">#Docentes: </td>
-                            <td style="text-align: right"><b>{point.docentes}</b></td>
-                      </tr>
-                      <tr>
-                            <td style="color: {series.color}">#Cursos: </td>
-                            <td style="text-align: right"><b>{point.cursos}</b></td>
-                      </tr>`,
+            pointFormat:
+                `<tr>
+                    <td style="color: {series.color}">#Inscriptos: </td>
+                    <td style="text-align: right"><b>{point.inscriptos}</b></td>
+                </tr>
+                <tr>
+                    <td style="color: {series.color}">#Docentes: </td>
+                    <td style="text-align: right"><b>{point.docentes}</b></td>
+                </tr>
+                <tr>
+                    <td style="color: {series.color}">#Cursos: </td>
+                    <td style="text-align: right"><b>{point.cursos}</b></td>
+                </tr>`,
             footerFormat: '</table>',
         },
         plotOptions: {

@@ -125,9 +125,7 @@ class ReporteCursos extends React.Component {
         obj['materiaId'] = undefined;
         validForm = (departamentoId !== undefined && departamentoId !== "" && periodoId !== undefined && periodoId !== "");
         obj['validForm'] = validForm;
-        console.log(obj);
         this.setState(obj);
-        console.log(this.state);
         if (validForm) {
             this.getMateriasChartData(departamentoId, periodoId);
         } else {
