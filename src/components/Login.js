@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, Input, FormFeedback, Card, CardTitle, CardText, Row, Col, Container, Alert } from 'reactstrap';
+import { Button, FormGroup, Input, FormFeedback, Card, CardTitle, CardBody, Row, Col, Container, Alert } from 'reactstrap';
 import './Login.css';
 import AuthService from './AuthService';
 
@@ -37,7 +37,7 @@ class Login extends Component {
                         <Col sm="12" md={{ size: 6, offset: 3 }}>
                             <Card body outline color="secondary" width="50%">
                                 <CardTitle className="text-center">Login</CardTitle>
-                                <CardText>
+                                <CardBody>
                                     <form onSubmit={this.handleFormSubmit}>
                                         <FormGroup>
                                             <Input
@@ -73,7 +73,7 @@ class Login extends Component {
                                             <Button type="submit" color="primary" disabled={!this.state.formValid}>Ingresar</Button>{' '}
                                         </FormGroup>
                                     </form>
-                                </CardText>
+                                </CardBody>
                             </Card>
                         </Col>
                     </Row>

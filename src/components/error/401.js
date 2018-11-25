@@ -4,10 +4,6 @@ import './error.css';
 
 
 export default class Error401 extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="error-page-container error-401">

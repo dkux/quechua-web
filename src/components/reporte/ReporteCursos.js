@@ -3,8 +3,8 @@ import { Button, FormGroup, Input, Card, CardBody, CardHeader, CardFooter, Row, 
     Container, Alert, Label } from 'reactstrap';
 import { render } from 'react-dom'
 import {Link} from "react-router-dom";
-import * as Highcharts from "highcharts";
-import HighchartsReact from 'highcharts-react-official'
+import MateriasChart from './MateriasChart'
+import CursosChart from './CursosChart'
 
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -12,121 +12,90 @@ import withAuth from "../withAuth";
 import AuthService from "../AuthService";
 
 
-const options = {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Alumnos incriptos por curso'
-    },
-    tooltip: {
-        useHTML: true,
-        headerFormat: '<b>{point.key}</b><table>',
-        pointFormat: `<tr>
-                            <td style="color: {series.color}">#Inscriptos: </td>
-                            <td style="text-align: right"><b>{point.inscriptos}</b></td>
-                      </tr>
-                      <tr>
-                            <td style="color: {series.color}">#Docentes: </td>
-                            <td style="text-align: right"><b>{point.docentes}</b></td>
-                      </tr>
-                      <tr>
-                            <td style="color: {series.color}">#Cursos: </td>
-                            <td style="text-align: right"><b>{point.cursos}</b></td>
-                      </tr>`,
-        footerFormat: '</table>',
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
-            }
-        }
-    },
-    series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: [{
-            name: 'Algoritmos I',
-            y: 61.41,
-            inscriptos: 20,
-            docentes: 2,
-            cursos:4
-        }, {
-            name: 'Algritmos II',
-            y: 11.84,
-            inscriptos: 22,
-            docentes: 5,
-            cursos:7
-        }, {
-            name: 'Algoritmos III',
-            y: 10.85,
-            inscriptos: 27,
-            docentes: 6,
-            cursos:8,
-        }, {
-            name: 'Taller I',
-            y: 4.67,
-            inscriptos: 29,
-            docentes: 11,
-            cursos:11,
-        }, {
-            name: 'Organización de datos',
-            y: 4.18,
-            inscriptos: 33,
-            docentes: 3,
-            cursos:1,
-        }]
-    }]
-}
 
 class ReporteCursos extends React.Component {
 
     constructor(props){
         super(props);
         this.state  = {
-            id: null,
-            fechaInicioValid: true,
-            fechaFinValid: true,
-            actividad: '',
-            formValid: true,
-            success: false,
-            error: false,
-            redirect: false,
+            departamentoId: undefined,
+            periodoId: undefined,
+            materiaId: undefined,
+            validForm: false,
+            departamentos: [],
+            periodos:[],
+            materiasChartData: [],
+            cursosChartData:[],
         };
         this.Auth = new AuthService();
     }
 
-    render() {
+
+    componentWillMount() {
+        this.getData();
+    }
+
+    render () {
         return (
             <div>
                 <Header history={this.props.history}/>
                 <div className="content">
                     <div className="content-inside" id="content">
-                        <Container>
+                        <Container fluid={true}>
+
                             <Row>
                                 <Col sm="12">
                                     <Card>
-                                        <CardHeader>Crear Periodo administrativo</CardHeader>
+                                        <CardHeader>Reporte de inscripciones</CardHeader>
                                         <CardBody>
                                             <Row>
-                                                <HighchartsReact
-                                                    highcharts={Highcharts}
-                                                    options={options}
-                                                />
+                                                <Col sm={"6"}>
+                                                    <FormGroup>
+                                                        <Label>Departamento</Label>
+                                                        <Input type="select"
+                                                               name="departamentoId"
+                                                               value={ this.state.departamentoId }
+                                                               onChange={ (e) => { this.handleUserInput(e) } }
+                                                        >
+                                                            <option value="">Seleccione un Departamento</option>
+                                                            {this.state.departamentos.map(departamento =>
+                                                                <option key={departamento.id} value={departamento.id}>{departamento.nombre}</option>
+                                                            )};
+                                                        </Input>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col sm={"6"}>
+                                                    <FormGroup>
+                                                        <Label for="departamentoSelect">Período</Label>
+                                                        <Input type="select"
+                                                               name="periodoId"
+                                                               value={ this.state.periodoId }
+                                                               onChange={ (e) => { this.handleUserInput(e) } }
+                                                        >
+                                                            <option value="">Seleccione un Periodo</option>
+                                                            {this.state.periodos.map(periodo =>
+                                                                <option key={periodo.id} value={periodo.id}>{periodo.cuatrimestre+"-"+periodo.anio}</option>
+                                                            )};
+                                                        </Input>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col sm={"6"}>
+                                                    <MateriasChart
+                                                        chartData={this.state.materiasChartData}
+                                                        onClickMateria={ (e) => { this.handleClickMateria(e) }}
+                                                    />
+                                                </Col>
+                                                <Col sm={"6"}>
+                                                    <CursosChart
+                                                        chartData={this.state.cursosChartData}
+                                                    />
+                                                </Col>
                                             </Row>
                                         </CardBody>
                                         <CardFooter>
-                                            <Button color="secondary" tag={Link} to={`/periodos`} >Volver</Button>
+                                            <Button color="secondary" tag={Link} to={`/`} >Volver</Button>
                                         </CardFooter>
                                     </Card>
                                 </Col>
@@ -139,8 +108,74 @@ class ReporteCursos extends React.Component {
         );
     }
 
+    handleUserInput(e){
+        const name = e.target.name;
+        const value = e.target.value;
+        let departamentoId = this.state.departamentoId;
+        let periodoId = this.state.periodoId;
+        let validForm;
+        let obj  = {};
+        if (name === "departamentoId") {
+            obj['departamentoId'] = value;
+            departamentoId = value;
+        } else {
+            obj['periodoId'] = value;
+            periodoId = value;
+        }
+        obj['materiaId'] = undefined;
+        validForm = (departamentoId !== undefined && departamentoId !== "" && periodoId !== undefined && periodoId !== "");
+        obj['validForm'] = validForm;
+        console.log(obj);
+        this.setState(obj);
+        console.log(this.state);
+        if (validForm) {
+            this.getMateriasChartData(departamentoId, periodoId);
+        } else {
+            this.setState({
+                materiasChartData: [],
+                cursosChartData:[]
+            });
+        }
+    }
 
+    getMateriasChartData(departamentoId, periodoId){
+        this.Auth.fetch(`http://localhost:8080/api/reportes/materias?departamentoId=`+departamentoId+`&periodoId=`+periodoId+``, {
+            method: 'GET'
+        }).then(res => {
+            this.setState({
+                materiasChartData: res,
+                cursosChartData:[]
+            });
+        });
+    }
+
+    getData(){
+        let departamentos, periodos;
+        this.Auth.fetch(`http://localhost:8080/api/departamentos`, {
+            method: 'GET'
+        }).then(res => {
+            departamentos = res;
+            this.Auth.fetch(`http://localhost:8080/api/periodos`, {
+                method: 'GET'
+            }).then(res => {
+                periodos = res;
+                this.setState({
+                    departamentos: departamentos,
+                    periodos: periodos
+                })
+            });
+        });
+    }
+
+    handleClickMateria(materiaId) {
+        this.Auth.fetch(`http://localhost:8080/api/reportes/cursos?materiaId=`+materiaId+`&periodoId=`+this.state.periodoId+``, {
+            method: 'GET'
+        }).then(res => {
+            this.setState({
+                cursosChartData: res,
+            });
+        });
+    }
 }
-
 
 export default withAuth(ReporteCursos);

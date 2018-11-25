@@ -223,7 +223,6 @@ class PeriodoCrear extends React.Component {
     }
 
     handleDescripcionInput(e) {
-        const name = e.target.name;
         const value = e.target.value;
         this.setState( {
             descripcion: value
