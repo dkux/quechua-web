@@ -29,6 +29,10 @@ const columns = [
         text: 'Actividad',
         sort: true,
         formatter: actividadFormatter
+    }, {
+        dataField: 'descripcion',
+        text: 'Descripcion',
+        sort: true,
     }
 ];
 

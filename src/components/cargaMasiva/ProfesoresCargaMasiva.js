@@ -5,7 +5,9 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import withAuth from "../withAuth";
 import AuthService from '../AuthService';
+import {toast} from "react-toastify";
 
+const Greet = ({ name }) => <div>{name}</div>
 
 class ProfesoresCargaMasiva extends React.Component {
     constructor(props){
@@ -109,6 +111,7 @@ class ProfesoresCargaMasiva extends React.Component {
     }
 
     handleFormSubmit(event){
+        toast(<Greet name="Procesando archivo de Profesores, aguarde unos segundos" />);
         event.preventDefault();
         if (!this.state.formValid) {
             return;

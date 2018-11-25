@@ -118,6 +118,24 @@ class PeriodoCrear extends React.Component {
                                                     </Col>
                                                     <Col>
                                                         <FormGroup>
+                                                            <Label>Actividad</Label>
+                                                            <Input
+                                                                type="select"
+                                                                value={this.state.actividad}
+                                                                onChange={this.handleChangeActividad}
+                                                            >
+                                                                <option value="CONSULTAR_PRIORIDAD">Consultar prioridades</option>
+                                                                <option value="INSCRIPCION_COLOQUIO">Inscripción a coloquios</option>
+                                                                <option value="INSCRIPCION_CURSADA">Inscripcion a Cursadas</option>
+                                                                <option value="CREACION_COLOQUIO">Creación de coloquios</option>
+                                                                <option value="DESINSCRIPCION_CURSADA">Desinscripcion cursada</option>
+                                                            </Input>
+                                                        </FormGroup>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <FormGroup>
                                                             <Label>Fecha de Inicio</Label>
                                                             <DatePicker
                                                                 locale="es"
@@ -153,22 +171,6 @@ class PeriodoCrear extends React.Component {
                                                             </FormFeedback>
                                                         </FormGroup>
                                                     </Col>
-                                                    <Col>
-                                                        <FormGroup>
-                                                            <Label>Actividad</Label>
-                                                            <Input
-                                                                type="select"
-                                                                value={this.state.actividad}
-                                                                onChange={this.handleChangeActividad}
-                                                            >
-                                                                <option value="CONSULTAR_PRIORIDAD">Consultar prioridades</option>
-                                                                <option value="INSCRIPCION_COLOQUIO">Inscripción a coloquios</option>
-                                                                <option value="INSCRIPCION_CURSADA">Inscripcion a Cursadas</option>
-                                                                <option value="CREACION_COLOQUIO">Creación de coloquios</option>
-                                                                <option value="DESINSCRIPCION_CURSADA">Desinscripcion cursada</option>
-                                                            </Input>
-                                                        </FormGroup>
-                                                    </Col>
                                                 </Row>
                                             </form>
                                         </CardBody>
@@ -196,7 +198,8 @@ class PeriodoCrear extends React.Component {
             id: this.state.id,
             fechaInicio: this.state.fechaInicio,
             fechaFin: this.state.fechaFin,
-            actividad: this.state.actividad
+            actividad: this.state.actividad,
+            descripcion: this.state.descripcion
         };
         const headers = {};
         headers['Authorization'] = 'Bearer ' + this.Auth.getToken();
