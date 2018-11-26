@@ -24,6 +24,7 @@ class ReporteCursos extends React.Component {
             validForm: false,
             departamentos: [],
             periodos:[],
+            noData: false,
             materiasChartData: [],
             cursosChartData:[],
         };
@@ -80,6 +81,14 @@ class ReporteCursos extends React.Component {
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
+
+                                            <Row className={!this.state.noData ? 'd-none' : ''}>
+                                                <Col sm="12">
+                                                    <Alert color="danger">
+                                                        No se encontraron datos para los parámetros ingresados.
+                                                    </Alert>
+                                                </Col>
+                                            </Row>
                                             <Row>
                                                 <Col sm={"6"}>
                                                     <MateriasChart
@@ -131,6 +140,7 @@ class ReporteCursos extends React.Component {
         } else {
             this.setState({
                 materiasChartData: [],
+                noData: false,
                 cursosChartData:[]
             });
         }
@@ -142,6 +152,7 @@ class ReporteCursos extends React.Component {
         }).then(res => {
             this.setState({
                 materiasChartData: res,
+                noData: res.length === 0,
                 cursosChartData:[]
             });
         });

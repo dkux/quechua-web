@@ -73,11 +73,11 @@ class Header extends React.Component {
                                         <DropdownItem>
                                             <Link to="/alumnos/cargaMasiva">Importar Alumnos</Link>
                                         </DropdownItem>
-                                        <DropdownItem divider />
-                                        <DropdownItem>
-                                            <Link to="/profesores/cargaMasiva">Importar Profesores</Link>
-                                        </DropdownItem>
                                     </div>
+                                    <DropdownItem divider />
+                                    <DropdownItem>
+                                        <Link to="/profesores/cargaMasiva">Importar Profesores</Link>
+                                    </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>
                                         <Link to="/reportes">Reporte</Link>
